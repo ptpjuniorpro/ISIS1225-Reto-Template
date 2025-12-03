@@ -1,4 +1,8 @@
 import sys
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
+from App import logic as lg
+from DataStructures.List import array_list as lt
 
 
 def new_logic():
@@ -6,7 +10,7 @@ def new_logic():
         Se crea una instancia del controlador
     """
     #TODO: Llamar la función de la lógica donde se crean las estructuras de datos
-    pass
+    return lg.new_logic()
 
 def print_menu():
     print("Bienvenido")
@@ -23,8 +27,22 @@ def load_data(control):
     """
     Carga los datos
     """
-    #TODO: Realizar la carga de datos
-    pass
+    first_5, last_5, time, count, catalog = lg.load_data(control)
+    
+    print(f"\nSe cargaron {count} elementos en {round(time,2)} ms\n")
+
+    print("Primeros 5 elementos cargados:")
+    for i in range(1, lt.size(first_5)):
+        print()
+        print(lt.get_element(first_5, i))
+
+    print("\nÚltimos 5 elementos cargados:")
+    for i in range(1, lt.size(last_5)):
+        print()
+        print(lt.get_element(last_5, i))
+
+    print()
+    return catalog
 
 
 def print_data(control, id):
@@ -34,12 +52,14 @@ def print_data(control, id):
     #TODO: Realizar la función para imprimir un elemento
     pass
 
-def print_req_1(control):
+def print_req_1(control, lat_o, lon_o, lat_d, lon_d, grulla):
     """
-        Función que imprime la solución del Requerimiento 1 en consola
+    Imprime la solución del Requerimiento 1:
+    Los primeros 5 nodos migratorios y los últimos 5.
     """
-    # TODO: Imprimir el resultado del requerimiento 1
-    pass
+    list = lg.req_1(control, lat_o, lon_o, lat_d, lon_d, grulla)
+    print(list)
+
 
 
 def print_req_2(control):
@@ -98,7 +118,13 @@ def main():
             print("Cargando información de los archivos ....\n")
             data = load_data(control)
         elif int(inputs) == 1:
-            print_req_1(control)
+            lat_o = 27.0 #float(input("Ingrese la latitud de origen: "))
+            lon_o = 61.0 # float(input("Ingrese la longitud de origen: "))
+            lat_d = 21.0 #float(input("Ingrese la latitud de destino: "))
+            lon_d = 78.0 #float(input("Ingrese la longitud de destino: "))
+            grulla = 912028234 #input("Ingrese el ID de la grulla: ")
+            
+            print_req_1(data, lat_o, lon_o, lat_d, lon_d, grulla)
 
         elif int(inputs) == 2:
             print_req_2(control)
